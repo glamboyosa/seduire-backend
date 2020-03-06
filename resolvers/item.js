@@ -1,5 +1,6 @@
 const { item } = require('../models/item');
 const { ProductTypeModel } = require('../models/productType');
+const DateHelper = require('../helpers/date');
 module.exports = {
   getProducts: async () => {
     try {
@@ -8,8 +9,8 @@ module.exports = {
         return {
           ...item._doc,
           _id: item.id,
-          createdAt: new Date(item._doc.createdAt).toISOString(),
-          updatedAt: new Date(item.updatedAt).toISOString()
+          createdAt: DateHelper(item._doc.createdAt),
+          updatedAt: DateHelper(item.updatedAt)
         };
       });
     } catch (error) {
@@ -25,8 +26,8 @@ module.exports = {
       return {
         ...Item._doc,
         _id: item.id,
-        createdAt: new Date(item._doc.createdAt).toISOString(),
-        updatedAt: new Date(item.updatedAt).toISOString()
+        createdAt: DateHelper(item._doc.createdAt),
+        updatedAt: DateHelper(item.updatedAt)
       };
     } catch (error) {
       throw new Error(`Error message: ${error.message}`);
@@ -84,12 +85,11 @@ module.exports = {
       });
       items.size.push(...size);
       const result = await items.save();
-      console.log(result);
       return {
         ...result._doc,
         _id: result.id,
-        createdAt: new Date(result._doc.createdAt).toISOString(),
-        updatedAt: new Date(result._doc.updatedAt).toISOString()
+        createdAt: DateHelper(result._doc.createdAt),
+        updatedAt: DateHelper(result._doc.updatedAt)
       };
     } catch (error) {
       throw new Error(`Error message: ${error.message}`);
