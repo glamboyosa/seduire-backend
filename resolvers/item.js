@@ -45,7 +45,6 @@ module.exports = {
         sex
       } = productInput;
       const ProductType = await ProductTypeModel.findById(type);
-      console.log(ProductType);
       if (!ProductType) {
         throw new Error('No product with this type exists');
       }
@@ -91,6 +90,24 @@ module.exports = {
         createdAt: DateHelper(result._doc.createdAt),
         updatedAt: DateHelper(result._doc.updatedAt)
       };
+    } catch (error) {
+      throw new Error(`Error message: ${error.message}`);
+    }
+  },
+  getCategory: async ({ sex }) => {
+    try {
+      const Item = await item.find({ sex });
+      if (!Item) {
+        throw new Error('There are currently no categories');
+      }
+      return Item.map(category => {
+        return {
+          ...category._doc,
+          _id: category.id,
+          createdAt: DateHelper(category._doc.createdAt),
+          updatedAt: DateHelper(category._doc.updatedAt)
+        };
+      });
     } catch (error) {
       throw new Error(`Error message: ${error.message}`);
     }
