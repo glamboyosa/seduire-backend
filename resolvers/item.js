@@ -48,6 +48,28 @@ module.exports = {
       if (!ProductType) {
         throw new Error('No product with this type exists');
       }
+      if (
+        !description ||
+        description === '' ||
+        typeof description !== 'string'
+      ) {
+        throw new Error('Invalid description format');
+      }
+      if (!creator || creator === '' || typeof creator !== 'string') {
+        throw new Error('Invalid creator format');
+      }
+      if (!sex || sex === '' || typeof sex !== 'string') {
+        throw new Error('Invalid sex format');
+      }
+      if (!price || price === '' || typeof price !== 'number') {
+        throw new Error('Invalid price format');
+      }
+      if (!size || size.length === 0) {
+        throw new Error('Invalid size format');
+      }
+      if (!mediaUrl || mediaUrl === '' || typeof mediaUrl !== 'string') {
+        throw new Error('Invalid mediaUrl format');
+      }
       const items = new item({
         description,
         creator,
