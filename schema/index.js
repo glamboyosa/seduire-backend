@@ -44,7 +44,12 @@ input ProductInput {
     price: Float!
     mediaUrl: String!
 }
-
+input UserInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+}
 type RootQuery {
     getProducts: [Item!]!
     getProduct(productId: String!): Item!
@@ -58,6 +63,7 @@ type RootQuery {
 type RootMutation {
     createProduct(productInput:ProductInput!): Item!
     createProductType (productType: String!): ProductType!
+    createUser(userInput: UserInput!): User!
     addToCart(item: String!, size: String!): Item!
     processTransaction(amount: Float!, currency: String!): ProcessTrx
 }

@@ -96,6 +96,9 @@ module.exports = {
   },
   getCategory: async ({ sex }) => {
     try {
+      if (!sex || sex === '' || typeof sex !== 'string') {
+        throw new Error('Invalid sex format');
+      }
       const Item = await item.find({ sex });
       if (!Item) {
         throw new Error('There are currently no categories');
