@@ -65,6 +65,7 @@ type RootMutation {
     createProductType (productType: String!): ProductType!
     createUser(userInput: UserInput!): User!
     addToCart(item: String!, size: String!): Item!
+    removeFromCart(item: String!): Item!
     processTransaction(amount: Float!, currency: String!): ProcessTrx
 }
     schema {
