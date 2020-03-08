@@ -6,8 +6,10 @@ const { connect } = require('mongoose');
 const dotenv = require('dotenv');
 const GraphQLSchema = require('./schema/index');
 const GraphQLResolvers = require('./resolvers/index');
+const cors = require('cors');
 dotenv.config();
 app.use(bodyParser.json());
+app.use(cors());
 app.use(
   '/api/graphql',
   graphqlHttp({

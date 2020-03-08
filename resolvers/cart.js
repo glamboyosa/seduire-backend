@@ -53,15 +53,12 @@ module.exports = {
   removeFromCart: async ({ item: itemId }) => {
     try {
       const user = await User.findById('5e6392f32206b910bc87fdc1');
-      // push comes to shove use below
-      //const item = await Item.findById(itemId);
       if (!user) {
         throw new Error('User with the given ID does not exist');
       }
       oldCart = user.cart.filter(el => el.id === itemId)[0];
       user.cart = user.cart.filter(el => el.id !== itemId);
       await user.save();
-      console.log(oldCart);
       return {
         ...oldCart._doc,
         createdAt: DateHelper(oldCart._doc.createdAt),
