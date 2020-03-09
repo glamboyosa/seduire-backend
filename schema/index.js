@@ -31,7 +31,6 @@ type ProcessTrx {
     clientSecret: String!
 }
 type LoginResponse {
-    id: String!
     token: String!,
     expDate: String!
 }
@@ -57,6 +56,7 @@ type RootQuery {
     getProductType: [ProductType!]!
     getCart: [Item!]!
     login(email: String!, password: String!): LoginResponse!
+    getSocialToken: LoginResponse!
 }
 
 
@@ -66,7 +66,7 @@ type RootMutation {
     createUser(userInput: UserInput!): User!
     addToCart(item: String!, size: String!): Item!
     removeFromCart(item: String!): Item!
-    processTransaction(amount: [Item!]!, currency: String!): ProcessTrx!
+    processTransaction(amount: [Float!]!, currency: String!): ProcessTrx!
 }
     schema {
         query: RootQuery

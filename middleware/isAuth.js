@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken');
 module.exports = (req, res, next) => {
   const header = req.header('Authorization');
-  if (!header || !req.token) {
+  if (!header) {
     req.isAuth = false;
     next();
   }
-  const token = header.split(' ')[1] || req.token;
+  const token = header.split(' ')[1];
   if (!token || token === '') {
     req.isAuth = false;
     next();

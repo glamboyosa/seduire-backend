@@ -34,5 +34,16 @@ module.exports = {
     } catch (error) {
       throw new Error(`Error message: ${error.message}`);
     }
+  },
+  getSocialToken: (args, req) => {
+    if (!req.token) {
+      throw new Error('Token does not exist');
+    }
+    const token = (decoded = jwt.verify(token, process.env.jwtPrivateKey));
+    console.log(token.exp);
+    return {
+      token: req.token,
+      expDate: new Date(token.exp).toISOString()
+    };
   }
 };
