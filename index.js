@@ -22,7 +22,7 @@ app.use(
 connect(process.env.database, () => {
   console.log('connected');
 });
-const port = 5000 || process.env.PORT;
+const port = 8000 || process.env.PORT;
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });

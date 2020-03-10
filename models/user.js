@@ -32,8 +32,11 @@ const schema = new Schema({
 });
 schema.methods.generateAuthToken = function() {
   return jwt.sign(
-    { userId: this._id, email: this.email, username: this.username },
-    process.env.jwtPrivateKey
+    { userId: this._id, email: this.email },
+    process.env.jwtPrivateKey,
+    {
+      expiresIn: '1h'
+    }
   );
 };
 module.exports = model('User', schema);

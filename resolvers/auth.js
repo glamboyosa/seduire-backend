@@ -11,21 +11,25 @@ module.exports = {
       if (!password || password === '' || typeof password !== 'string') {
         throw new Error('Invalid password format');
       }
-      const existingUser = User.findOne({ email });
+      const existingUser = await User.findOne({ email });
       if (!existingUser) {
         throw new Error('User does not exist');
       }
-      const isExisting = bcrypt.compare(password, existingUser.password);
+      const isExisting = await bcrypt.compare(password, existingUser.password);
       if (!isExisting) {
         throw new Error('Invalid login credentials');
       }
       const token = existingUser.generateAuthToken();
       const decoded = jwt.verify(token, process.env.jwtPrivateKey);
       return {
+        firstName: existingUser.firstName,
         token,
+        exp: decoded.exp,
         expDate: new Date(decoded.exp).toISOString()
       };
-    } catch (error) {}
+    } catch (error) {
+      throw new Error(`Error Message: ${error.message}`);
+    }
   },
   createUser: async ({ userInput }) => {
     try {
@@ -60,16 +64,5 @@ module.exports = {
     } catch (error) {
       throw new Error(`Error message: ${error.message}`);
     }
-  },
-  getSocialToken: (args, req) => {
-    if (!req.token) {
-      throw new Error('Token does not exist');
-    }
-    const token = jwt.verify(req.token, process.env.jwtPrivateKey);
-    console.log(token.exp);
-    return {
-      token: req.token,
-      expDate: new Date(token.exp).toISOString()
-    };
   }
 };

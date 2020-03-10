@@ -31,7 +31,9 @@ type ProcessTrx {
     clientSecret: String!
 }
 type LoginResponse {
-    token: String!,
+    firstName: String!
+    token: String!
+    exp: Float!
     expDate: String!
 }
 input ProductInput {
@@ -56,7 +58,6 @@ type RootQuery {
     getProductType: [ProductType!]!
     getCart: [Item!]!
     login(email: String!, password: String!): LoginResponse!
-    getSocialToken: LoginResponse!
 }
 
 
