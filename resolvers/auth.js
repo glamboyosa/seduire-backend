@@ -1,6 +1,32 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
+const dotenv = require('dotenv').config();
+const jwt = require('jsonwebtoken');
 module.exports = {
+  login: async ({ email, password }) => {
+    try {
+      if (!/@/.test(email)) {
+        throw new Error('Invalid email');
+      }
+      if (!password || password === '' || typeof password !== 'string') {
+        throw new Error('Invalid password format');
+      }
+      const existingUser = User.findOne({ email });
+      if (!existingUser) {
+        throw new Error('User does not exist');
+      }
+      const isExisting = bcrypt.compare(password, existingUser.password);
+      if (!isExisting) {
+        throw new Error('Invalid login credentials');
+      }
+      const token = existingUser.generateAuthToken();
+      const decoded = jwt.verify(token, process.env.jwtPrivateKey);
+      return {
+        token,
+        expDate: new Date(decoded.exp).toISOString()
+      };
+    } catch (error) {}
+  },
   createUser: async ({ userInput }) => {
     try {
       const { firstName, lastName, email, password } = userInput;
@@ -39,7 +65,7 @@ module.exports = {
     if (!req.token) {
       throw new Error('Token does not exist');
     }
-    const token = (decoded = jwt.verify(token, process.env.jwtPrivateKey));
+    const token = jwt.verify(req.token, process.env.jwtPrivateKey);
     console.log(token.exp);
     return {
       token: req.token,

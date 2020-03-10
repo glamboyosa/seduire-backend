@@ -1,8 +1,10 @@
+const dotenv = require('dotenv').config();
 const stripeKey = require('../stripe');
-const stripe = require('stripe')(stripeKey);
+const stripe = require('stripe')(process.env.stripeSecretKey);
 const calculateOrderAmount = require('../helpers/calculateAmount');
 module.exports = {
   processTransaction: async ({ amount, currency }) => {
+    console.log(process.env.stripeSecretKey);
     try {
       const paymentIntent = await stripe.paymentIntents.create({
         amount: calculateOrderAmount(amount),

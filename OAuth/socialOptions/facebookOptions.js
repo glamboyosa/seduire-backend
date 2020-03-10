@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config();
 module.exports = {
   clientID: process.env.facebookAppID,
   clientSecret: process.env.facebookClientSecret,
