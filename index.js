@@ -5,11 +5,13 @@ const { connect } = require('mongoose');
 const dotenv = require('dotenv');
 const GraphQLSchema = require('./schema/index');
 const GraphQLResolvers = require('./resolvers/index');
+const AuthMiddleware = require('./middleware/isAuth');
 const cors = require('cors');
 dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use(AuthMiddleware);
 app.use(
   '/api/graphql',
   graphqlHttp({

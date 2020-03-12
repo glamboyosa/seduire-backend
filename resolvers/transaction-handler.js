@@ -3,9 +3,11 @@ const stripeKey = require('../stripe');
 const stripe = require('stripe')(process.env.stripeSecretKey);
 const calculateOrderAmount = require('../helpers/calculateAmount');
 module.exports = {
-  processTransaction: async ({ amount, currency }) => {
-    console.log(process.env.stripeSecretKey);
+  processTransaction: async ({ amount, currency },req) => {
     try {
+      if(!req.isAuth){
+        throw new Error("No access.")
+      }
       const paymentIntent = await stripe.paymentIntents.create({
         amount: calculateOrderAmount(amount),
         currency,
