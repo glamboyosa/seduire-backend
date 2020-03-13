@@ -24,6 +24,7 @@ connect(process.env.database, () => {
   console.log('connected');
 });
 const port = 8000 || process.env.PORT;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
+module.exports = server;
