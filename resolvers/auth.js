@@ -48,7 +48,7 @@ module.exports = {
       }
       const salt = await bcrypt.genSalt(12);
       const hashedPassword = await bcrypt.hash(password, salt);
-      const existingUser = User.findOne({ email });
+      const existingUser = await User.findOne({ email });
       if (existingUser) {
         throw new Error('User already exists');
       }
