@@ -25,9 +25,9 @@ module.exports = {
       }
       return {
         ...Item._doc,
-        _id: item.id,
-        createdAt: DateHelper(item._doc.createdAt),
-        updatedAt: DateHelper(item.updatedAt)
+        _id: Item.id,
+        createdAt: DateHelper(Item._doc.createdAt),
+        updatedAt: DateHelper(Item.updatedAt)
       };
     } catch (error) {
       throw new Error(`Error message: ${error.message}`);
