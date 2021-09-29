@@ -9,7 +9,7 @@ const AuthMiddleware = require('./middleware/isAuth');
 const cors = require('cors');
 dotenv.config();
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 app.use(AuthMiddleware);
 app.use(
